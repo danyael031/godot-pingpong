@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://cf3fiopaiudyx"]
+
+[ext_resource type="Script" path="res://ball.gd" id="1_kncs8"]
+[ext_resource type="Texture2D" uid="uid://dbftk6ewyl5g6" path="res://604px-Table_tennis_ball.png" id="1_r7rqh"]
+[ext_resource type="AudioStream" uid="uid://jeidw1rwgxvi" path="res://audio_ball.ogg" id="3_jpu2l"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1gd20"]
+radius = 32.0
+
+[node name="Ball" type="CharacterBody2D"]
+script = ExtResource("1_kncs8")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 1.52588e-05)
+scale = Vector2(0.108, 0.108)
+texture = ExtResource("1_r7rqh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_1gd20")
+
+[node name="AudioCollision" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_jpu2l")

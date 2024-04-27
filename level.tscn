@@ -1,0 +1,75 @@
+[gd_scene load_steps=7 format=3 uid="uid://cr5uxkwkwrmcn"]
+
+[ext_resource type="PackedScene" uid="uid://c6veyugfurxcq" path="res://player.tscn" id="1_8uol1"]
+[ext_resource type="Script" path="res://level.gd" id="1_vvarc"]
+[ext_resource type="PackedScene" uid="uid://cf3fiopaiudyx" path="res://ball.tscn" id="2_3ll5k"]
+[ext_resource type="Script" path="res://oponente.gd" id="3_bd5yg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kr8s7"]
+size = Vector2(1920, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_va4ya"]
+size = Vector2(50, 1080)
+
+[node name="Level" type="Node2D"]
+script = ExtResource("1_vvarc")
+
+[node name="ParedSuperior" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ParedSuperior"]
+position = Vector2(960, -25)
+shape = SubResource("RectangleShape2D_kr8s7")
+
+[node name="ParedInferior" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ParedInferior"]
+position = Vector2(960, 1105)
+shape = SubResource("RectangleShape2D_kr8s7")
+
+[node name="ArcoPlayer" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ArcoPlayer"]
+position = Vector2(-25, 540)
+shape = SubResource("RectangleShape2D_va4ya")
+
+[node name="ArcoOponente" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ArcoOponente"]
+position = Vector2(1945, 540)
+shape = SubResource("RectangleShape2D_va4ya")
+
+[node name="Player" parent="." instance=ExtResource("1_8uol1")]
+position = Vector2(50, 460)
+
+[node name="Ball" parent="." instance=ExtResource("2_3ll5k")]
+position = Vector2(968, 542)
+
+[node name="Oponente" parent="." instance=ExtResource("1_8uol1")]
+position = Vector2(1845, 460)
+script = ExtResource("3_bd5yg")
+
+[node name="MarcadorPlayer" type="Label" parent="."]
+custom_minimum_size = Vector2(1920, 1080)
+offset_left = -200.0
+offset_right = 1720.0
+offset_bottom = 1080.0
+theme_override_font_sizes/font_size = 64
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarcadorOponente" type="Label" parent="."]
+custom_minimum_size = Vector2(1920, 1080)
+offset_left = 200.0
+offset_right = 2120.0
+offset_bottom = 1080.0
+theme_override_font_sizes/font_size = 64
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RestartTimer" type="Timer" parent="."]
+
+[connection signal="body_entered" from="ArcoPlayer" to="." method="_on_arco_player_body_entered"]
+[connection signal="body_entered" from="ArcoOponente" to="." method="_on_arco_oponente_body_entered"]
+[connection signal="timeout" from="RestartTimer" to="Ball" method="_on_restart_timer_timeout"]
